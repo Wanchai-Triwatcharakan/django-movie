@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>New-Movie</title>
+{% endblock %}
+
+{% block content %}
+<body>
+    {% include 'component/header.html' %}
+    <div class="overlay">
+        <div class="album py-2 mt-5">
+            <div class="container">
+                <nav>
+                    <ol class="breadcrumb px-2 py-2 mt-3 mb-3 rounded-3" style="background-color:#E1E1E1">
+                        <li class="breadcrumb-item active"><a href="{% url 'home' %}"class="link-underline link-underline-opacity-0">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item active"><a href="#" class="link-underline link-underline-opacity-0"> ค้นหา {{ searching }}</a></li>
+                    </ol>
+                </nav>
+
+                <div class="row">
+                    {% if results %}
+                        {% for result in results reversed%}
+                            <div class="col-6 col-sm-6 col-md-3 col-lg-3 my-2">
+                                <a href="{% if result.status_list == 'yes' %}{% url 'list' result.id %}{% else %}{% url 'play' result.id %}{% endif %}" class="link-underline link-underline-opacity-0">
+                                    <div class="card shadow-sm h-100">
+                                        <img src="{{result.image.url}}" class="rounded card-img-top h-100" alt="">
+                                        <div class="card-body p-2">
+                                            <p class="card-text text-center" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                {{result.name}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                    <div class="container">
+                        <div class="alert alert-light d-flex d-flex justify-content-center h-100">
+                            <div class="align-self-center fs-2 text-center">ไม่พบผลลัพธ์การค้นหาด้วยคำว่า <br> " {{ searching }} "</div>
+                        </div>
+                    </div>    
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'component/footer.html' %}
+</body>
+{% endblock %}

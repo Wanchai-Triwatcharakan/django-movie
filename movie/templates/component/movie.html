@@ -1,0 +1,65 @@
+<nav>
+    <ol class="breadcrumb px-2 py-2 mt-5 mb-3 rounded-3" style="background-color:#E1E1E1">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="link-underline link-underline-opacity-0">หน้าหลัก</a></li>
+        {% if 'category' in request.META.HTTP_REFERER %}
+        <li class="breadcrumb-item"><a href="{{ request.META.HTTP_REFERER }}" class="link-underline link-underline-opacity-0">หมวดหมู่ {{play_movie.category}}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active"><a href="#" class="link-underline link-underline-opacity-0">{{play_movie.name}}</a></li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-3 my-2">
+        <div class="card shadow-sm">
+            <img src="{{play_movie.image.url}}" width="50%" height="auto" class="rounded card-img-top" alt="">
+        </div>
+    </div>
+    <div class="col-md-9 my-2">
+        <div class="card shadow-sm w-100 h-100">
+            <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{play_movie.vdo_ex}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5" style="height: 50vh;">
+    <div class="col-md-12 my-2">
+        <div class="tab-content w-100 h-100" id="nav-tabContent">
+            <div class="tab-pane fade show active w-100 h-100" id="play1">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นหลัก</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{play_movie.vdo_main}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100 h-100" id="play2">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นสำรอง 1</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{play_movie.vdo_main_2}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100 h-100" id="play3">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นสำรอง 2</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{play_movie.vdo_main_3}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="row my-3">
+    <div class="d-flex justify-content-center my-3">
+        <div class="col-sm-4 col-md-6">
+            <div class="list-group list-group-horizontal text-center">
+                <a class="list-group-item list-group-item-action active d-flex justify-content-center" data-bs-toggle="list" href="#play1">
+                    <div class="align-self-center">ตัวเล่นหลัก</div>
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#play2">
+                    <div class="align-self-center">ตัวเล่นสำรอง 1</div>
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#play3">
+                    <div class="align-self-center">ตัวเล่นสำรอง 2</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

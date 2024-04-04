@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>New-Movie</title>
+{% endblock %}
+
+{% block content %}
+<body style="background-image: url('{{play_movie.image.url}}'); background-size: cover;" >
+    {% include 'component/header.html' %}
+    
+    <div class="container mt-4">
+        <nav>
+            <ol class="breadcrumb px-2 py-2 mt-5 mb-3 rounded-3" style="background-color:#E1E1E1">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="link-underline link-underline-opacity-0">หน้าหลัก</a></li>
+                {% if 'category' in request.META.HTTP_REFERER %}
+                <li class="breadcrumb-item"><a href="{{ request.META.HTTP_REFERER }}" class="link-underline link-underline-opacity-0">หมวดหมู่ {{play_movie.category}}</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active"><a href="#" class="link-underline link-underline-opacity-0">{{play_movie.name}}</a></li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-3 my-2">
+                <div class="card shadow-sm">
+                    <img src="{{play_movie.image.url}}" width="50%" height="auto" class="rounded card-img-top" alt="">
+                </div>
+            </div>
+            <div class="col-md-9 my-2">
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{play_movie.vdo_ex}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center rounded-3 p-1 my-2" style="background-color:#E1E1E1">รายการ</div>
+        <div class="card shadow-sm w-100 h-100">
+            <div class="list-group">
+                {% for part in list_movie %}
+                    <a type="button" class="list-group-item list-group-item-action list-group-item-dark" href="{% url 'play_list' play_id=play_movie.id part_id=part.part %}"> {{play_movie.name}} ตอนที่ {{part.part}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'component/footer.html' %}
+</body>
+{% endblock %}

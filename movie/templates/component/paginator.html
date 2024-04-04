@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="container">
+        <nav class="d-flex justify-content-center mt-3">
+            {% if data_movie.paginator.num_pages > 1 %} <!-- paginator.num_pages คือ จำนวนหน้าทั้งหมดที่มีในการแบ่งหน้า num_pages = 10 -->
+            <ul class="pagination pagination-sm">
+        
+                <!-- ก่อนหน้า -->
+        
+                {% if data_movie.has_previous %}
+                <li id="previous-btn" class="page-item col-md-5">
+                    <a class="page-link d-flex justify-content-center" href="?page={{ data_movie.previous_page_number }}"><div class="align-self-center">ก่อนหน้า</div></a>
+                </li>
+                {% else %}
+                <li id="previous-btn" class="page-item disabled col-md-5">
+                    <a class="page-link d-flex justify-content-center"><div class="align-self-center">ก่อนหน้า</div></a>
+                </li>
+                {% endif %}
+        
+                <!-- จบก่อนหน้า -->
+                {% if data_movie.paginator.num_pages > 6 %}
+                    {% if data_movie.number > 3 %} <!-- data_movie.number เป็นหมายเลขของหน้าปัจจุบันที่กำลังแสดงผล -->
+                    
+                        <li class="page-item col-md-1">
+                            <a class="page-link d-flex justify-content-center" href="?page=1"><div class="align-self-center">1</div></a>
+                        </li>
+                        <li class="page-item col-md-1">
+                            <a class="page-link d-flex justify-content-center"><div class="align-self-center">...</div></a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+        
+                <!-- แสดงหน้า -->
+        
+                {% for page_number in data_movie.paginator.page_range %} <!-- paginator.page_range คือ list ของหมายเลขหน้าทั้งหมดที่ถูกสร้างขึ้นมา มีชนิดข้อมูลเป็น list [1, 2, 3] -->
+                    {% if data_movie.paginator.num_pages > 6 %}
+                        {% if data_movie.number <= 3 %}
+                            {% if page_number <= 6 %}
+                                <li class="page-item {% if page_number == data_movie.number %} active {% endif %} col-md-1">
+                                    <a class="page-link d-flex justify-content-center" href="?page={{ page_number }}"><div class="align-self-center">{{ page_number }}</div></a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            {% if page_number >= data_movie.number|add:-2 and page_number <= data_movie.number|add:2 %}
+                                <li class="page-item {% if page_number == data_movie.number %} active {% endif %} col-md-1">
+                                    <a class="page-link d-flex justify-content-center" href="?page={{ page_number }}"><div class="align-self-center">{{ page_number }}</div></a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item {% if page_number == data_movie.number %} active {% endif %} col-md-1">
+                        <a class="page-link d-flex justify-content-center" href="?page={{ page_number }}"><div class="align-self-center">{{ page_number }}</div></a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+        
+                <!-- จบแสดงหน้า -->
+                {% if data_movie.paginator.num_pages > 6 %}
+                    {% if data_movie.number < data_movie.paginator.num_pages|add:-3 %}
+        
+                        <li class="page-item col-md-1">
+                            <a class="page-link d-flex justify-content-center"><div class="align-self-center">...</div></a>
+                        </li>
+                        <li class="page-item col-md-1"> <!-- data_movie.number เป็นหมายเลขของหน้าปัจจุบันที่กำลังแสดงผล -->
+                            <a class="page-link d-flex justify-content-center" href="?page={{data_movie.paginator.num_pages}}"><div class="align-self-center">{{data_movie.paginator.num_pages}}</div></a>
+                        </li>
+                    
+                    {% endif %}
+                {% endif %}
+        
+                <!-- ถัดไป -->
+        
+                {% if data_movie.has_next %}
+                <li id="next-btn" class="page-item col-md-4">
+                    <a class="page-link d-flex justify-content-center" href="?page={{ data_movie.next_page_number }}"><div class="align-self-center">ถัดไป</div></a>
+                </li>
+                {% else %}
+                <li id="next-btn" class="page-item disabled col-md-4">
+                    <a class="page-link d-flex justify-content-center"><div class="align-self-center">ถัดไป</div></a>
+                </li>
+                {% endif %}
+        
+                <!-- จบถัดไป -->
+        
+            </ul>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+
+<script>
+    function checkWindowSize() {
+        if (window.innerWidth < 768) { // ตรวจสอบขนาดหน้าจอ
+            document.getElementById("previous-btn").querySelector(".align-self-center").innerText = "<"; // เปลี่ยนเนื้อหาของปุ่มเป็น <
+            document.getElementById("next-btn").querySelector(".align-self-center").innerText = ">";
+        } else {
+            document.getElementById("previous-btn").querySelector(".align-self-center").innerText = "ก่อนหน้า"; // เปลี่ยนเนื้อหาของปุ่มเป็น ก่อนหน้า
+            document.getElementById("next-btn").querySelector(".align-self-center").innerText = "ถัดไป";
+        }
+    }
+
+    window.onload = checkWindowSize; // เรียกใช้เมื่อหน้าโหลด
+    window.onresize = checkWindowSize; // เรียกใช้เมื่อขนาดหน้าจอเปลี่ยนแปลง
+</script>

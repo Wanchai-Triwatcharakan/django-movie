@@ -1,0 +1,74 @@
+<nav>
+    <ol class="breadcrumb px-2 py-2 mt-5 mb-3 rounded-3" style="background-color:#E1E1E1">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="link-underline link-underline-opacity-0">หน้าหลัก</a></li>
+        <li class="breadcrumb-item active"><a href="{% url 'list' play_movie.id %}" class="link-underline link-underline-opacity-0">{{play_movie.name}}</a></li>
+        <li class="breadcrumb-item active"><a href="#" class="link-underline link-underline-opacity-0">ตอนที่ {{list_movie.part}}</a></li>
+    </ol>
+</nav>
+
+<div class="row mb-2">
+    <div class="col-3 col-sm-3 col-md-3">
+        <a class="btn w-100 h-100 d-flex justify-content-center {% if list_movie.part <= 1 %} disabled {% endif %}" style="background-color:#E1E1E1;" href="{% url 'play_list' play_id=play_movie.id part_id=list_movie.part|add:-1 %}"> <!-- filter |add:-1 ลบค่า 1 -->
+            <div class="align-self-center">ตอนก่อนหน้า</div>
+        </a>
+    </div>
+    
+    <div class="col-6 col-sm-6 col-md-6">
+        <div class="d-flex justify-content-center rounded-2 w-100 h-100" style="background-color:#E1E1E1">
+            <div class="align-self-center">ตอนที่ {{list_movie.part}}</div>
+        </div>
+    </div>
+    
+    <div class="col-3 col-sm-3 col-md-3">
+        <a class="btn w-100 h-100 d-flex justify-content-center {% if list_movie.part >= part %} disabled {% endif %}" style="background-color:#E1E1E1;" href="{% url 'play_list' play_id=play_movie.id part_id=list_movie.part|add:1 %}"> <!-- filter |add:1 บวกค่า 1 -->
+            <div class="align-self-center">ตอนถัดไป</div>
+        </a>
+    </div>
+</div>
+
+<div class="row mb-5" style="height: 50vh;">
+    <div class="col-md-12 my-2">
+        <div class="tab-content w-100 h-100" id="nav-tabContent">
+            <div class="tab-pane fade show active w-100 h-100" id="play1">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นหลัก</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{list_movie.vdo}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100 h-100" id="play2">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นสำรอง 1</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{list_movie.vdo_2}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100 h-100" id="play3">
+                <div class="text-center rounded-3 p-1 mb-3" style="background-color:#E1E1E1">ตัวเล่นสำรอง 2</div>
+                <div class="card shadow-sm w-100 h-100">
+                    <iframe class="w-100 h-100" src="https://www.youtube.com/embed/{{list_movie.vdo_3}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row my-3">
+    <div class="d-flex justify-content-center my-3">
+        <div class="col-sm-4 col-md-6">
+            <div class="list-group list-group-horizontal text-center">
+                <a class="list-group-item list-group-item-action active d-flex justify-content-center" data-bs-toggle="list" href="#play1">
+                    <div class="align-self-center">ตัวเล่นหลัก</div>
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#play2">
+                    <div class="align-self-center">ตัวเล่นสำรอง 1</div>
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#play3">
+                    <div class="align-self-center">ตัวเล่นสำรอง 2</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- {% if request.path != request.META.HTTP_REFERER %}
+<li class="breadcrumb-item"><a href="{{ request.META.HTTP_REFERER }}" class="link-underline link-underline-opacity-0">หมวดหมู่ {{play_movie.category}}</a></li>
+{% endif %} -->
